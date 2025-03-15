@@ -1,0 +1,156 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(cuid())
+  email         String    @unique
+  name          String?
+  emailVerified Boolean   @default(false)
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  sessions      Session[]
+  accounts      Account[]
+}
+
+model Session {
+  id        String   @id @default(cuid())
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Role {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  accounts Account[]
+}
+
+model Letter {
+  id        String   @id @default(cuid())
+  sender    String
+  object    String
+  email     String
+  message   String
+  sendAt    DateTime @default(now())
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId String?
+}
+
+model Account {
+  id                    String        @id @default(cuid())
+  accountId             String        @unique
+  providerId            String
+  userId                String
+  user                  User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime      @default(now())
+  updatedAt             DateTime      @updatedAt
+  role                  Role          @relation(fields: [roleId], references: [id])
+  roleId                String
+  letters               Letter[]
+  reactionLogs          ReactionLog[]
+}
+
+model Verification {
+  id         String    @id @default(cuid())
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime? @default(now())
+  updatedAt  DateTime? @updatedAt
+}
+
+model Category {
+  id           String       @id @default(cuid())
+  name         String       @unique
+  technologies Technology[]
+
+  @@map("categories")
+}
+
+model Technology {
+  id         String              @id @default(cuid())
+  name       String              @unique
+  category   Category            @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  projects   ProjectTechnology[]
+
+  @@map("technologies")
+}
+
+model ProjectTechnology {
+  technology   Technology @relation(fields: [technologyId], references: [id], onDelete: Cascade)
+  technologyId String
+  project      Project    @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId    String
+
+  @@id([projectId, technologyId])
+  @@map("projects_technologies")
+}
+
+model Project {
+  id              String              @id @default(cuid())
+  title           String
+  description     String
+  productionUrl   String?
+  githubUrl       String?
+  imageUrl        String?
+  videoUrl        String?
+  status          ProjectStatus       @relation(fields: [projectStatusId], references: [id])
+  projectStatusId String
+  createdAt       DateTime            @default(now())
+  updatedAt       DateTime            @updatedAt
+  technologies    ProjectTechnology[]
+  reactions       ReactionLog[]
+
+  @@map("projects")
+}
+
+model ProjectStatus {
+  id       String    @id @default(cuid())
+  name     String    @unique
+  projects Project[]
+
+  @@map("project_status")
+}
+
+model Reaction {
+  id      String        @id @default(cuid())
+  emoji   String        @unique
+  action  String
+  tooltip String
+  logs    ReactionLog[]
+}
+
+model ReactionLog {
+  id         String   @id @default(cuid())
+  account    Account  @relation(fields: [accountId], references: [id], onDelete: Cascade)
+  accountId  String
+  project    Project  @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId  String
+  reaction   Reaction @relation(fields: [reactionId], references: [id], onDelete: Cascade)
+  reactionId String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@unique([accountId, projectId, reactionId])
+  @@map("reaction_logs")
+}
