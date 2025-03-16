@@ -6,7 +6,7 @@
 @plugin "tailwindcss-animate";
 
 @custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
-
+/* 
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -121,4 +121,4 @@
   body {
     @apply bg-background text-foreground;
   }
-}
+} */
