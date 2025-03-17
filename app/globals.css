@@ -1,11 +1,13 @@
 @import "tailwindcss";
 @plugin "daisyui" {
-  themes: cupecake --default, forest --prefersdark;
+  themes: cupcake --default, forest --prefersdark;
 }
 
 @plugin "tailwindcss-animate";
 
-@custom-variant dark (&:where([data-theme=night], [data-theme=night] *));
+@custom-variant light (&:where([data-theme=cupcake], [data-theme=cupcake] *));
+@custom-variant dark (&:where([data-theme=forest], [data-theme=forest] *));
+
 /* 
 :root {
   --radius: 0.625rem;

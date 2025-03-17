@@ -1,10 +1,10 @@
-import { Footer } from "@/src/components/layout/Footer";
-import { Header } from "@/src/components/layout/Header";
+import { Footer } from "@components/layout/Footer";
+import { Navbar } from "@/components/layout/Navbar";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Header />
+      <Navbar />
       {children}
       <Footer />
     </>
