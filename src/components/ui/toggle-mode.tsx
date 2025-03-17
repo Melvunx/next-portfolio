@@ -11,16 +11,16 @@ export function ToggleMode() {
   console.log({ theme });
 
   return (
-    <label className="flex items-center cursor-pointer gap-2">
-      <Moon size={21} />
+    <label className="swap swap-rotate cursor-pointer">
       <input
         type="checkbox"
         value="cupcake"
         checked={theme === "cupcake"}
         onChange={toggleTheme}
-        className="toggle theme-controller"
+        className="theme-controller"
       />
-      <SunIcon size={21} />
+      <Moon size={21} className="swap-on" />
+      <SunIcon size={21} className="swap-off" />
     </label>
   );
 }
