@@ -37,17 +37,6 @@ model Role {
   accounts Account[]
 }
 
-model Letter {
-  id        String   @id @default(cuid())
-  sender    String
-  object    String
-  email     String
-  message   String
-  sendAt    DateTime @default(now())
-  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
-  accountId String?
-}
-
 model Account {
   id                    String        @id @default(cuid())
   accountId             String        @unique
@@ -63,8 +52,8 @@ model Account {
   password              String?
   createdAt             DateTime      @default(now())
   updatedAt             DateTime      @updatedAt
-  role                  Role          @relation(fields: [roleId], references: [id])
-  roleId                String
+  role                  Role?         @relation(fields: [roleId], references: [id])
+  roleId                String?
   letters               Letter[]
   reactionLogs          ReactionLog[]
 }
@@ -76,6 +65,17 @@ model Verification {
   expiresAt  DateTime
   createdAt  DateTime? @default(now())
   updatedAt  DateTime? @updatedAt
+}
+
+model Letter {
+  id        String   @id @default(cuid())
+  sender    String
+  object    String
+  email     String
+  message   String
+  sendAt    DateTime @default(now())
+  account   Account? @relation(fields: [accountId], references: [id], onDelete: SetNull)
+  accountId String?
 }
 
 model Category {

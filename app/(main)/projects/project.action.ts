@@ -1,4 +1,4 @@
-import { prisma } from "@lib/prisma";
+import { prisma } from "@/components/lib/prisma";
 
 export const getProjectsAction = async () => {
   try {

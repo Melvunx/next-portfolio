@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { LoginButton } from "../LoginButton";
 import { Logo } from "../Logo";
 import { ToggleMode } from "../ui/toggle-mode";
 
@@ -38,7 +37,9 @@ export function Navbar() {
       className={`flex w-full ${isScrolled ? "opacity-25" : "bg-transparent"}`}
     >
       <div className="flex-1">
-        <Logo />
+        <Link href="/">
+          <Logo />
+        </Link>
       </div>
       <div className="flex items-center justify-evenly w-2/3 mx-auto">
         {links.map((link, idx) => (
@@ -49,7 +50,6 @@ export function Navbar() {
       </div>
       <div>
         <ToggleMode />
-        <LoginButton />
       </div>
     </nav>
   );

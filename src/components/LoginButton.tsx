@@ -1,4 +1,6 @@
-import { Provider, ProviderLoginAction } from "../../app/login.action";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
+import { auth } from "./lib/auth";
 import { Button } from "./ui/button";
 import {
   DropdownMenu,
@@ -10,9 +12,27 @@ import {
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
 
+type Provider = "github" | "google";
+
 const ProviderForm = ({ provider }: { provider: Provider }) => {
   return (
-    <form action={() => ProviderLoginAction(provider)}>
+    <form
+      action={async () => {
+        "use server";
+        const results = await auth.api.signInSocial({
+          body: {
+            provider,
+          },
+          headers: await headers(),
+        });
+
+        if (!results.url) {
+          throw new Error("No redirect URL");
+        }
+
+        redirect(results.url);
+      }}
+    >
       <Button type="submit">Sign in with {provider}</Button>
     </form>
   );

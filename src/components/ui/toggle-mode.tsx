@@ -8,8 +8,6 @@ export function ToggleMode() {
     setTheme(theme === "cupcake" ? "forest" : "cupcake");
   };
 
-  console.log({ theme });
-
   return (
     <label className="swap swap-rotate cursor-pointer">
       <input

@@ -1,4 +1,4 @@
-import { cn } from "@lib/utils";
+import { cn } from "@/components/lib/utils";
 import { cva } from "class-variance-authority";
 
 type ButtonColor =
