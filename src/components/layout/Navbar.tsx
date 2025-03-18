@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { LoginButton } from "../LoginButton";
 import { Logo } from "../Logo";
 import { ToggleMode } from "../ui/toggle-mode";
 
@@ -27,7 +28,7 @@ export function Navbar() {
       name: "Mes contacts",
     },
     {
-      href: "/projets",
+      href: "/projects",
       name: "Projets",
     },
   ];
@@ -47,10 +48,8 @@ export function Navbar() {
         ))}
       </div>
       <div>
-        <label className="swap swap-flip">
-          <input type="text" />
-          <ToggleMode />
-        </label>
+        <ToggleMode />
+        <LoginButton />
       </div>
     </nav>
   );
