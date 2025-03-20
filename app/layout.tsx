@@ -1,3 +1,4 @@
+import { verifyUserRole } from "@/components/lib/auth-user";
 import type { Metadata } from "next";
 import { ThemeProvider } from "next-themes";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -23,6 +24,9 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Verify if the user role is completed
+  verifyUserRole();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <body
