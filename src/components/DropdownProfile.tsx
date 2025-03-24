@@ -19,9 +19,9 @@ export function DropdownProfile({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="outline">
+        <Button variant="outline" className="rounded-none">
           <div className="avatar">
-            <div className="w-8 rounded-full">
+            <div className="w-7 border bg-primary dark:text-primary-content rounded-full">
               {user.image ? (
                 <Image
                   src={user.image}
@@ -30,7 +30,9 @@ export function DropdownProfile({ user }: { user: User }) {
                   height={1000}
                 />
               ) : (
-                user.name[0].toUpperCase()
+                <p className="flex h-full items-center justify-center">
+                  {user.name[0].toUpperCase()}
+                </p>
               )}
             </div>
           </div>
@@ -38,19 +40,20 @@ export function DropdownProfile({ user }: { user: User }) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
-        <DropdownMenuLabel>
+        <DropdownMenuLabel className="flex items-center justify-evenly">
           <UserProfile />
           Mon compte
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="border-1 my-1 light:border-gray-200 dark:border-gray-700" />
         <DropdownMenuGroup>
-          <DropdownMenuItem>{user.email}</DropdownMenuItem>
+          <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         </DropdownMenuGroup>
         <DropdownMenuLabel>Paramètres</DropdownMenuLabel>
         <DropdownMenuItem>
           <form>
             <Button
               variant="ghost"
+              className="pl-0"
               formAction={async () => {
                 "use server";
 

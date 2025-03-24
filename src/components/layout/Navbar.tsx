@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "../Logo";
+import { Button } from "../ui/button";
 import { ToggleMode } from "../ui/toggle-mode";
 
 export function Navbar() {
@@ -44,7 +45,9 @@ export function Navbar() {
       <div className="flex items-center justify-around w-4/5 mx-auto">
         {links.map((link, idx) => (
           <Link key={idx} href={link.href}>
-            {link.name}
+            <Button className="rounded-none" variant="outline">
+              {link.name}
+            </Button>
           </Link>
         ))}
       </div>
