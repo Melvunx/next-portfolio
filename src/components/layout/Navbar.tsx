@@ -36,19 +36,19 @@ export function Navbar() {
     <nav
       className={`flex w-full ${isScrolled ? "opacity-25" : "bg-transparent"}`}
     >
-      <div className="flex-1">
+      <div className="flex items-center justify-center flex-1">
         <Link href="/">
           <Logo />
         </Link>
       </div>
-      <div className="flex items-center justify-evenly w-2/3 mx-auto">
+      <div className="flex items-center justify-around w-4/5 mx-auto">
         {links.map((link, idx) => (
           <Link key={idx} href={link.href}>
             {link.name}
           </Link>
         ))}
       </div>
-      <div>
+      <div className="flex">
         <ToggleMode />
       </div>
     </nav>

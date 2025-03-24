@@ -5,8 +5,11 @@ import { Footer } from "@components/layout/Footer";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <Navbar />
-      <AuthButton />
+      <div className="flex">
+        <Navbar />
+        <AuthButton />
+      </div>
+
       {children}
       <Footer />
     </>
