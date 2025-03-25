@@ -1,4 +1,5 @@
 import { headers } from "next/headers";
+import Image from "next/image";
 import { redirect } from "next/navigation";
 import { auth } from "./lib/auth";
 import { Button } from "./ui/button";
@@ -14,9 +15,24 @@ import {
 
 type Provider = "github" | "google";
 
-const ProviderForm = ({ provider }: { provider: Provider }) => {
+type ProviderFormProps = {
+  provider: Provider;
+  link: string;
+  width?: number;
+  height?: number;
+  className?: string;
+};
+
+const ProviderForm: React.FC<ProviderFormProps> = ({
+  provider,
+  link,
+  width = 30,
+  height = 30,
+  className,
+}) => {
   return (
     <form
+      className="w-full"
       action={async () => {
         "use server";
         const results = await auth.api.signInSocial({
@@ -33,13 +49,39 @@ const ProviderForm = ({ provider }: { provider: Provider }) => {
         redirect(results.url);
       }}
     >
-      <Button type="submit">Sign in with {provider}</Button>
+      <Button
+        className="flex items-center justify-evenly w-full"
+        type="submit"
+        variant="ghost"
+      >
+        Sign in with {provider}
+        <Image
+          src={link}
+          className={className}
+          alt={`provider-${provider}`}
+          width={width}
+          height={height}
+        />
+      </Button>
     </form>
   );
 };
 
 export function LoginButton() {
-  const providers = ["google", "github"];
+  const buttons = [
+    {
+      provider: "google",
+      image:
+        "https://img.icons8.com/?size=100&id=17949&format=png&color=000000",
+      className: undefined,
+    },
+    {
+      provider: "github",
+      image:
+        "https://img.icons8.com/?size=100&id=106562&format=png&color=000022",
+      className: "rounded-full bg-white",
+    },
+  ];
 
   return (
     <DropdownMenu>
@@ -50,11 +92,15 @@ export function LoginButton() {
         <DropdownMenuLabel>
           Sélectionner un moyen de connexion
         </DropdownMenuLabel>
-        <DropdownMenuSeparator />
+        <DropdownMenuSeparator className="border-1 my-1 light:border-gray-200 dark:border-gray-700" />
         <DropdownMenuGroup>
-          {providers.map((provider, idx) => (
-            <DropdownMenuItem key={idx}>
-              <ProviderForm provider={provider as Provider} />
+          {buttons.map((button, idx) => (
+            <DropdownMenuItem key={idx} className="flex">
+              <ProviderForm
+                provider={button.provider as Provider}
+                link={button.image}
+                className={button.className}
+              />
             </DropdownMenuItem>
           ))}
         </DropdownMenuGroup>
