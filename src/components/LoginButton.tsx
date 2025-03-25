@@ -88,7 +88,7 @@ export function LoginButton() {
       <DropdownMenuTrigger asChild>
         <Button>Connexion</Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="backdrop-blur-sm">
         <DropdownMenuLabel>
           Sélectionner un moyen de connexion
         </DropdownMenuLabel>

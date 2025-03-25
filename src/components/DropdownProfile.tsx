@@ -1,7 +1,8 @@
 import { User } from "better-auth";
-import { User as UserProfile } from "lucide-react";
+import { LogOut, Settings, User as UserProfile } from "lucide-react";
 import { headers } from "next/headers";
 import Image from "next/image";
+import Link from "next/link";
 import { redirect } from "next/navigation";
 import { auth } from "./lib/auth";
 import { Button } from "./ui/button";
@@ -11,9 +12,14 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuPortal,
   DropdownMenuSeparator,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+
 
 export function DropdownProfile({ user }: { user: User }) {
   return (
@@ -39,7 +45,7 @@ export function DropdownProfile({ user }: { user: User }) {
           {user.name ?? user.email}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent>
+      <DropdownMenuContent className="backdrop-blur-sm">
         <DropdownMenuLabel className="flex items-center justify-evenly">
           <UserProfile />
           Mon compte
@@ -48,12 +54,28 @@ export function DropdownProfile({ user }: { user: User }) {
         <DropdownMenuGroup>
           <DropdownMenuLabel>{user.email}</DropdownMenuLabel>
         </DropdownMenuGroup>
-        <DropdownMenuLabel>Paramètres</DropdownMenuLabel>
+        <DropdownMenuSub>
+          <DropdownMenuSubTrigger className="space-x-2">
+            <Settings />
+            Paramètres
+          </DropdownMenuSubTrigger>
+          <DropdownMenuPortal>
+            <DropdownMenuSubContent className="backdrop-blur-sm">
+              <DropdownMenuItem>
+                <Link href={`/change-name/${user.id}`}>
+                  <Button variant="ghost">Changer de nom</Button>
+                </Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+
+              </DropdownMenuItem>
+            </DropdownMenuSubContent>
+          </DropdownMenuPortal>
+        </DropdownMenuSub>
         <DropdownMenuItem>
           <form>
             <Button
               variant="ghost"
-              className="pl-0"
               formAction={async () => {
                 "use server";
 
@@ -64,6 +86,7 @@ export function DropdownProfile({ user }: { user: User }) {
                 redirect("/");
               }}
             >
+              <LogOut className="pl-0" />
               Déconexion
             </Button>
           </form>

@@ -5,11 +5,10 @@ import { Footer } from "@components/layout/Footer";
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <div className="flex">
-        <Navbar />
+      <div className="flex justify-around">
         <AuthButton />
+        <Navbar />
       </div>
-
       {children}
       <Footer />
     </>

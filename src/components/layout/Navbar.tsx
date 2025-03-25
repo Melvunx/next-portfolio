@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { Logo } from "../Logo";
+import { ProjectMenu } from "../ProjectMenu";
 import { Button } from "../ui/button";
 import { ToggleMode } from "../ui/toggle-mode";
 
@@ -27,15 +28,11 @@ export function Navbar() {
       href: "#contact-me",
       name: "Mes contacts",
     },
-    {
-      href: "/projects",
-      name: "Projets",
-    },
   ];
 
   return (
     <nav
-      className={`flex w-full ${isScrolled ? "opacity-25" : "bg-transparent"}`}
+      className={`flex w-4/5 ${isScrolled ? "opacity-25" : "bg-transparent"}`}
     >
       <div className="flex items-center justify-center flex-1">
         <Link href="/">
@@ -43,6 +40,7 @@ export function Navbar() {
         </Link>
       </div>
       <div className="flex items-center justify-around w-4/5 mx-auto">
+        <ProjectMenu />
         {links.map((link, idx) => (
           <Link key={idx} href={link.href}>
             <Button className="rounded-none" variant="outline">

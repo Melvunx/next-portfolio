@@ -1,6 +1,8 @@
 import { getRequiredUser } from "./auth-session";
 import { prisma } from "./prisma";
 
+const { ROLE_ID, ROLE_ADMIN_ID } = process.env;
+
 export async function verifyEmailUser(userId: string) {
   try {
     const updatedUser = await prisma.user.update({
@@ -40,7 +42,7 @@ export const verifyUserRole = async () => {
         id: account.id,
       },
       data: {
-        roleId: process.env.ROLE_ID,
+        roleId: ROLE_ID,
       },
       select: {
         id: true,
@@ -55,3 +57,26 @@ export const verifyUserRole = async () => {
 
   console.log("Verification completed !");
 };
+
+export async function adminVerification() {
+  const user = await getRequiredUser();
+
+  try {
+    await prisma.account.findFirstOrThrow({
+      where: {
+        userId: user.id,
+        roleId: ROLE_ADMIN_ID,
+      },
+      select: {
+        id: true,
+        userId: true,
+        roleId: true,
+      },
+    });
+
+    return true;
+  } catch (error) {
+    console.error("Erreur de vérification admin:", error);
+    return false;
+  }
+}

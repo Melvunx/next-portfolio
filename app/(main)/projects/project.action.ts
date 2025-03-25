@@ -44,7 +44,50 @@ export const getProjectsAction = async () => {
   }
 };
 
-export const createProjectAction = async () => {};
+export const getProjectIdAction = async (projectId: string) => {
+  try {
+    const project = await prisma.project.findUnique({
+      where: {
+        id: projectId,
+      },
+      omit: {
+        projectStatusId: true,
+      },
+      include: {
+        status: {
+          select: {
+            name: true,
+          },
+        },
+        technologies: {
+          omit: {
+            technologyId: true,
+            projectId: true,
+          },
+          include: {
+            technology: {
+              omit: { categoryId: true },
+              include: {
+                category: true,
+              },
+            },
+          },
+        },
+        reactions: {
+          include: {
+            reaction: true,
+          },
+        },
+      },
+    });
+
+    return project;
+  } catch (error) {
+    console.error("Erreur lors de la récupération des projets:", error);
+    throw new Error("Impossible de récupérer les projets");
+  }
+};
+
 
 export const deleteProjectAction = async (projectId: string) => {
   try {
