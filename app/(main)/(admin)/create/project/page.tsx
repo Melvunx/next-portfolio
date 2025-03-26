@@ -1,5 +1,4 @@
 import { SubmitButton } from "@/components/SubmitButton";
-import { createProjectAction } from "../create.action";
 
 export default function Page() {
   return (
@@ -7,7 +6,7 @@ export default function Page() {
       action={async () => {
         "use server";
 
-        await createProjectAction();
+        // await createProjectAction();
       }}
     >
       <SubmitButton />

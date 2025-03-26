@@ -1,3 +1,9 @@
+import { TechnoDialog } from "@/components/TechnoDialog";
+
 export default function Page() {
-  return <div></div>;
+  return (
+    <div>
+      <TechnoDialog />
+    </div>
+  );
 }
