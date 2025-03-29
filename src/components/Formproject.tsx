@@ -1,12 +1,14 @@
 "use client";
 
 import { Categories } from "@/schema/category";
+import { formProjectAction } from "@app/(main)/(admin)/create/create.action";
 import {
   getCategories,
   getProjectStatus,
 } from "@app/(main)/(admin)/create/project/project.utils";
 import { ProjectStatus } from "@prisma/client";
 import { useEffect, useState } from "react";
+import { SubmitButton } from "./SubmitButton";
 import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import {
@@ -61,7 +63,7 @@ export function FormProject() {
   }
 
   return (
-    <form>
+    <form action={async (formData) => await formProjectAction(formData)}>
       <div>
         <label htmlFor="tit" className="floating-label">
           <span>Titre</span>
@@ -91,6 +93,24 @@ export function FormProject() {
             minLength={10}
           />
           <p className="validator-hint">Minimum de 10 charactères</p>
+        </label>
+      </div>
+      <div>
+        <label className="input">
+          <span className="label">https://github</span>
+          <input type="url" placeholder="URL" name="github" />
+        </label>
+        <label className="input">
+          <span className="label">https://production</span>
+          <input type="url" placeholder="URL" name="production" />
+        </label>
+        <label className="input">
+          <span className="label">https://image</span>
+          <input type="url" placeholder="URL" name="image" />
+        </label>
+        <label className="input">
+          <span className="label">https://vidéo</span>
+          <input type="url" placeholder="URL" name="video" />
         </label>
       </div>
       <select name="status" defaultValue="Sélectionner un état">
@@ -143,6 +163,7 @@ export function FormProject() {
           </ScrollArea>
         </DialogContent>
       </Dialog>
+      <SubmitButton />
     </form>
   );
 }

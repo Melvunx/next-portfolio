@@ -1,15 +1,9 @@
-import { SubmitButton } from "@/components/SubmitButton";
+import { FormProject } from "@/components/Formproject";
 
 export default function Page() {
   return (
-    <form
-      action={async () => {
-        "use server";
-
-        // await createProjectAction();
-      }}
-    >
-      <SubmitButton />
-    </form>
+    <div>
+      <FormProject />
+    </div>
   );
 }

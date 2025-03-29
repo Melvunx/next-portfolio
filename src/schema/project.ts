@@ -6,6 +6,7 @@ export const ProjectCreateSchema = z.object({
   githubUrl: z.string().url().optional(),
   productionUrl: z.string().url().optional(),
   imageUrl: z.string().url().optional(),
+  videoUrl: z.string().url().optional(),
   statusId: z.string().cuid(),
 });
 

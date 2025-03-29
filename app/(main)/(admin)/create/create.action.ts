@@ -11,6 +11,7 @@ export const createProjectAction = async (project: ProjectCreate) => {
         githubUrl: project.githubUrl ?? "NULL",
         productionUrl: project.productionUrl ?? "NULL",
         imageUrl: project.imageUrl ?? "NULL",
+        videoUrl: project.videoUrl ?? "NULL",
       },
     });
 
@@ -45,4 +46,18 @@ export const addTechnologiesAction = async (crendentials: {
     console.error(error);
     throw new Error("Erreur lors de l'ajout des technologies au projet");
   }
+};
+
+export const formProjectAction = async (data: FormData) => {
+  const project = {
+    title: data.get("title") as string,
+    description: data.get("description") as string,
+    statusId: data.get("status") as string,
+    githubUrl: data.get("githubUrl") as string,
+    productionUrl: data.get("productionUrl") as string,
+    imageUrl: data.get("imageUrl") as string,
+    videoUrl: data.get("videoUrl") as string,
+  };
+
+  await createProjectAction(project);
 };
