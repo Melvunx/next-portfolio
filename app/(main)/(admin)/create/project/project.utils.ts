@@ -18,6 +18,7 @@ export async function getTechnologies() {
 
 export async function getCategories() {
   const categories = await prisma.category.findMany({
+    orderBy: { name: "asc" },
     include: {
       technologies: {
         select: {

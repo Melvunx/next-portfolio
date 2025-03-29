@@ -31,7 +31,7 @@ export default async function Page(props: {
             await updateUserNameAction(credentials);
           }}
         >
-          <label htmlFor="username" className="floating-label">
+          <label className="floating-label">
             {/* <span>Votre nom</span> */}
             <input
               type="text"

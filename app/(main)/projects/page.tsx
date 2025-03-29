@@ -1,9 +1,9 @@
-import { TechnoDialog } from "@/components/TechnoDialog";
+import { FormProject } from "@/components/Formproject";
 
 export default function Page() {
   return (
     <div>
-      <TechnoDialog />
+      <FormProject />
     </div>
   );
 }
