@@ -12,6 +12,7 @@ import {
 } from "./ui/card";
 
 export async function ProjectCard({ project }: { project: ProjectCardType }) {
+  
   if (!project) {
     return <div>Erreur lors de la récupération du projet</div>;
   }
@@ -51,7 +52,6 @@ export async function ProjectCard({ project }: { project: ProjectCardType }) {
             </Link>
           )}
         </div>
-
         <p>{project.description}</p>
       </CardContent>
       <CardFooter>
