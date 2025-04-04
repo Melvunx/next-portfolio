@@ -1,3 +1,3 @@
-export default function Page() {
-  return <form>Main page</form>;
+export default async function Page() {
+  return <div>Main page</div>;
 }

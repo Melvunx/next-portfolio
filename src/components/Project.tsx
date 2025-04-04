@@ -12,7 +12,6 @@ import {
 } from "./ui/card";
 
 export async function ProjectCard({ project }: { project: ProjectCardType }) {
-  
   if (!project) {
     return <div>Erreur lors de la récupération du projet</div>;
   }
@@ -77,8 +76,10 @@ export function TechnologyFilter({ technology }: { technology: string }) {
 
 export async function Project() {
   const projects = await getProjectsAction();
+
   return (
     <div>
+      <div></div>
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
