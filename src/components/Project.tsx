@@ -2,6 +2,7 @@ import { ProjectCardType } from "@/schema/project";
 import { getProjectsAction } from "@app/(main)/projects/project.action";
 import Image from "next/image";
 import Link from "next/link";
+import { PaginationControls } from "./PaginationControls";
 import { Button } from "./ui/button";
 import {
   Card,
@@ -62,10 +63,6 @@ export async function ProjectCard({ project }: { project: ProjectCardType }) {
   );
 }
 
-export function ProjectPagination({ length }: { length: number }) {
-  return <div>Enter {length}</div>;
-}
-
 export function TechnologyFilter({ technology }: { technology: string }) {
   return (
     <div className="flex items-center justify-center w-full h-full p-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -83,7 +80,7 @@ export async function Project() {
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
-      <ProjectPagination length={projects.length} />
+      <PaginationControls totalItems={projects.length} itemsPerPage={5} />
     </div>
   );
 }
