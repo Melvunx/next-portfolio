@@ -1,5 +1,7 @@
 import { ProjectCardType } from "@/schema/project";
+import { getTechnologies } from "@app/(main)/(admin)/create/project/project.utils";
 import { getProjectsAction } from "@app/(main)/projects/project.action";
+import { Technology } from "@prisma/client";
 import Image from "next/image";
 import Link from "next/link";
 import { PaginationControls } from "./PaginationControls";
@@ -63,20 +65,40 @@ export async function ProjectCard({ project }: { project: ProjectCardType }) {
   );
 }
 
-export function TechnologyFilter({ technology }: { technology: string }) {
+export async function TechnologyFilter({
+  technology,
+}: {
+  technology: Technology;
+}) {
   return (
-    <div className="flex items-center justify-center w-full h-full p-4 text-sm font-medium text-gray-900 bg-gray-100 border border-gray-300 rounded-lg dark:bg-gray-700 dark:border-gray-600 dark:text-white">
-      {technology}
+    <div>
+      <input
+        type="reset"
+        name="frameworks"
+        className="btn btn-square"
+        value="x"
+      />
+      <input
+        type="radio"
+        name="frameworks"
+        className="btn"
+        aria-label={technology.name}
+      />
     </div>
   );
 }
 
 export async function Project() {
   const projects = await getProjectsAction();
+  const technologies = await getTechnologies();
 
   return (
     <div>
-      <div></div>
+      <form className="filter">
+        {technologies.map((technology) => (
+          <TechnologyFilter key={technology.id} technology={technology} />
+        ))}
+      </form>
       {projects.map((project) => (
         <ProjectCard key={project.id} project={project} />
       ))}
