@@ -92,6 +92,10 @@ export async function Project() {
   const projects = await getProjectsAction();
   const technologies = await getTechnologies();
 
+  if (!projects || projects.length === 0) {
+    return <div>Aucun projet trouvé</div>;
+  }
+
   return (
     <div>
       <form className="filter">
